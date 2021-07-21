@@ -94,9 +94,11 @@ class SliderFilterList extends React.Component {
         min: leftMark,
         max: rightMark
       },
-      active: this.props.tags.filter(tag => tag.active).length > 0
+      active: this.props.tags.filter(tag => tag.active).length > 0,
+      cleared: false
     }
   }
+
   /**
    * Reset the filter if the entire set is toggled off
    * @param {*} prevProps Old props for component
@@ -108,7 +110,17 @@ class SliderFilterList extends React.Component {
           min: 0,
           max: this.props.tags.length - 1
         },
-        active: false
+        active: false,
+        cleared: false
+      })
+    }
+    else if (this.props.onClear===false){
+      this.setState({
+        value: {
+          min:0,
+          max: this.props.tags.length - 1
+        },
+        active: false,
       })
     }
   }
@@ -155,7 +167,9 @@ class SliderFilterList extends React.Component {
     this.setState(prevState => ({
       active: !prevState.active
     }))
+    console.log('toggle')
   }
+
 
   /**
    * Update min and max marks on the slider element
@@ -178,7 +192,7 @@ class SliderFilterList extends React.Component {
             <Form style={{ minWidth: '14rem' }} inline>
               <FormGroup style={{ width: '100%' }}>
                 <Col xs={2}>
-                  <Input type='checkbox' checked={this.state.active} onChange={this.onToggleChange} />
+                  <Input type='checkbox' checked={this.state.active} onChange={this.onToggleChange}/>
                 </Col>
                 <Col xs={10} className={!this.state.active ? 'greyed-out' : ''}>
                     <InputRange

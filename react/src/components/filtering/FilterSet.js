@@ -70,7 +70,7 @@ class FilterSet extends React.Component {
 
     var leafJSX = undefined
     if (sortedLeaves.length > 0 && node.filterMethod === 'slider') {
-      leafJSX = <SliderFilterList clear={this.state.clear} className='slider-filter-set' setName={node.name} tags={sortedLeaves} callback={this.gatherFilters} key={node.name} filters={[]} />
+      leafJSX = <SliderFilterList clear={this.state.clear} onClear={this.props.onClear} className='slider-filter-set' setName={node.name} tags={sortedLeaves} callback={this.gatherFilters} key={node.name} filters={[]} />
     } else if (sortedLeaves.length > 0){
       leafJSX = <CheckboxFilterList clear={this.state.clear} classname='filter-set' setName={node.name} tags={sortedLeaves} callback={this.gatherFilters} key={node.name} filters={[]} />
     }
@@ -100,7 +100,7 @@ class FilterSet extends React.Component {
   terminate(tag) {
     return (
       // <p>{tag.name}</p>
-      <FilterItem defaultChecked={tag.active} clear={this.clear} key={tag.name} filterName={tag.name} callback={() => this.props.callback(this.props.node.name, [tag.name])} />
+      <FilterItem defaultChecked={tag.active} key={tag.name} filterName={tag.name} callback={() => this.props.callback(this.props.node.name, [tag.name])} />
     )
   }
 

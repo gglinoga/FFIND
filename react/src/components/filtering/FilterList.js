@@ -32,6 +32,7 @@ class FilterList extends React.Component {
    * Create a new FilterList
    * @param {*} props React props
    */
+
   constructor(props) {
     super(props)
     console.log(JSON.stringify(this.props.filters))
@@ -44,21 +45,24 @@ class FilterList extends React.Component {
       filters: this.props.filters,
       prevFilters: this.props.filters,
       clear: true,
-      ttOpen: false
+      ttOpen: false,
+      active: true
     }
   }
 
   componentDidMount() {
     this.setState({
       loaded: true,
-      tags: this.props.filters
+      tags: this.props.filters,
+      active: true
     })
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (JSON.stringify(prevState.filters) !== JSON.stringify(this.props.filters)) {
       this.setState({
-        filters: this.props.filters
+        filters: this.props.filters,
+        active: true
       })
     }
   }
@@ -96,6 +100,9 @@ class FilterList extends React.Component {
    */
   clear() {
     this.props.clear({})
+    this.setState({
+      active: false
+    })
   }
 
   toggle() {
@@ -125,14 +132,14 @@ class FilterList extends React.Component {
 
             </Col>
             <Col className='text-right' md='4'>
-              <Button outline className='filter-button text-center' color='danger' size='sm' onClick={this.clear}><i
+              <Button outline className='filter-button text-center' color='danger' size='sm' onClick={e=>this.clear(e)}><i
                 className='fa fa-home fa-fw' />Clear</Button>
             </Col>
           </Row>
           {this.props.filters.children.map(filterSet => {
             return (
               <div className='filter-set'>
-                <FilterSet setName={filterSet.name} node={filterSet} callback={this.setFilters} depth={1} />
+                <FilterSet onClear={this.state.active} setName={filterSet.name} node={filterSet} callback={this.setFilters} depth={1} />
               </div>
             )
             // switch (filterSet.filterMethod) {

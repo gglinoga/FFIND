@@ -14,6 +14,7 @@ import {
  * @author Jimmy Messmer
  */
 class FilterItem extends React.Component {
+
   render() {
     return (
       <div className='filter-item'>
