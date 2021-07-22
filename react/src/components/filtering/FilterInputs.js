@@ -114,7 +114,7 @@ class SliderFilterList extends React.Component {
         cleared: false
       })
     }
-    else if (this.props.onClear===false){
+    else if (this.props.onClear===false && this.state.active===true){
       this.setState({
         value: {
           min:0,
